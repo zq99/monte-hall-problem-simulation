@@ -13,7 +13,8 @@ The solution allows you to configure the following parameters:
 
 ## Example
 
-This is an example of running a 3 door game where the contestant repicks after being shown a door by the host:
+This is an example of running a 3 door game 10,000 times where the contestant repicks after being shown a door by the host.
+The experiment is repeated 100 times, and the results are aggregated.
 
         Game game = Game.createInstance(3);
         Simulation simulation = new Simulation(game);
