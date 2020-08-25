@@ -11,6 +11,25 @@ The solution allows you to configure the following parameters:
 - Whether the contestant sticks with original choice
 - Number of times to run simulation to get aggregate statistics
 
+## Example
+
+This is an example of running a 3 door game where the contestant repicks after being shown a door by the host:
+
+        Game game = Game.createInstance(3);
+        Simulation simulation = new Simulation(game);
+
+        Experiment experiment = new Experiment.ExperimentBuilder(simulation)
+                .numberOfGameRuns(10000)
+                .numberOfSimulationRuns(100)
+                .stickToChoice(false).build();
+
+        ExperimentResults results = experiment.runExperiment();
+
+        System.out.println(results.getAverageWins());
+        System.out.println(results.getMaxWin());
+        System.out.println(results.getMinWin());
+
+
 ## Further Info
 
 - https://en.wikipedia.org/wiki/Monty_Hall_problem
