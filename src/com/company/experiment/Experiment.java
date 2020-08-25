@@ -61,12 +61,12 @@ public class Experiment {
             this.simulation = simulation;
         }
 
-        public ExperimentBuilder numberOfGames(int numberOfGames) {
+        public ExperimentBuilder numberOfGameRuns(int numberOfGames) {
             this.totalNumberOfGames = numberOfGames;
             return this;
         }
 
-        public ExperimentBuilder numberOfRuns(int numberOfSimulations) {
+        public ExperimentBuilder numberOfSimulationRuns(int numberOfSimulations) {
             this.totalNumberOfSimulations = numberOfSimulations;
             return this;
         }
