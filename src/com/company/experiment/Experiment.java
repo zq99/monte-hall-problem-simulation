@@ -66,7 +66,7 @@ public class Experiment {
             return this;
         }
 
-        public ExperimentBuilder numberOfSimulations(int numberOfSimulations) {
+        public ExperimentBuilder numberOfRuns(int numberOfSimulations) {
             this.totalNumberOfSimulations = numberOfSimulations;
             return this;
         }

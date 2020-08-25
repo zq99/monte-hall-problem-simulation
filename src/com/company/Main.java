@@ -13,7 +13,7 @@ public class Main {
 
         Experiment experiment = new Experiment.ExperimentBuilder(simulation)
                 .numberOfGames(10000)
-                .numberOfSimulations(100)
+                .numberOfRuns(100)
                 .stickToChoice(false).build();
 
         ExperimentResults results = experiment.runExperiment();
