@@ -32,7 +32,7 @@ The experiment is repeated 100 times, and the results are aggregated.
 
 ## Answer
 
-The following code can be used to determine the answer to the original problem statement.
+The following code can be used to determine the answer to the original problem statement. This code uses the default settings which is to run 10,000 games for each simulation, and then aggregate the results for 100 simulations.
 
         Simulation simulation = new Simulation(Game.createInstance(3));
         
@@ -51,7 +51,7 @@ The following code can be used to determine the answer to the original problem s
             System.out.println("results are inconclusive");
         }
 
-This code uses the default settings which is to run 10,000 games for each simulation, and then aggregate the results for 100 simulations.
+
 
 ## Further Info
 
