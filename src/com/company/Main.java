@@ -1,42 +1,27 @@
 package com.company;
 
-import com.company.simulation.Game;
-import com.company.simulation.Simulation;
-import com.company.simulation.SimulationStats;
+import com.company.experiment.Experiment;
+import com.company.experiment.ExperimentResults;
+import com.company.simulation.*;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println(">User sticks with choice");
-        runSimulation(3,10000,100,true);
-
-        System.out.println(">User always changes");
-        runSimulation(3,10000,100,false);
-
-    }
-
-    public static void runSimulation(int numberOfDoors,int totalNumberOfGames,int totalNumberOfSimulations,boolean stickToChoice){
-        float totalWins=0f;
-        float minWin=100f;
-        float maxWin=0f;
-
-        Game game = Game.createInstance(numberOfDoors);
+        Game game = Game.createInstance(3);
         Simulation simulation = new Simulation(game);
 
-        for (int i = 0; i <= totalNumberOfSimulations; i++) {
-            SimulationStats simulationStats = simulation.runSimulation(totalNumberOfGames, stickToChoice);
-            totalWins += simulationStats.getPercentageWins();
-            minWin = Math.min(simulationStats.getPercentageWins(),minWin);
-            maxWin = Math.max(simulationStats.getPercentageWins(), maxWin);
-        }
+        Experiment experiment = new Experiment.ExperimentBuilder(simulation)
+                .numberOfGames(10000)
+                .numberOfSimulations(100)
+                .stickToChoice(false).build();
 
-        float averagePercent = (totalWins/totalNumberOfSimulations);
-        System.out.println("Average Win Percent: " + averagePercent);
-        System.out.println("Max Win Percent: " + maxWin);
-        System.out.println("Min Win Percent: " + minWin);
+        ExperimentResults results = experiment.runExperiment();
+
+        System.out.println(results.getAverageWins());
+        System.out.println(results.getMaxWin());
+        System.out.println(results.getMinWin());
+
     }
-
-
 
 }
