@@ -30,6 +30,28 @@ The experiment is repeated 100 times, and the results are aggregated.
         System.out.println(results.getMaxWin());
         System.out.println(results.getMinWin());
 
+## Answer
+
+The following code can be used to determine the answer to the original problem statement.
+
+        Simulation simulation = new Simulation(Game.createInstance(3));
+        
+        HashMap<Boolean, Float> resultFromChoicesMap = new HashMap<>();
+
+        for(boolean choice : new boolean[]{true,false}){
+            Experiment experiment = new Experiment.ExperimentBuilder(simulation).stickToChoice(choice).build();
+            resultFromChoicesMap.put(choice,experiment.runExperiment().getAverageWins());
+        }
+
+        if(resultFromChoicesMap.get(true) > resultFromChoicesMap.get(false) ){
+            System.out.println("contestant should stick with first choice");
+        }else if(resultFromChoicesMap.get(false) > resultFromChoicesMap.get(true)){
+            System.out.println("contestant should pick again after host reveals a door");
+        }else{
+            System.out.println("results are inconclusive");
+        }
+
+This code uses the default settings which is to run 10,000 games for each simulation, and then aggregate the results for 100 simulations.
 
 ## Further Info
 
