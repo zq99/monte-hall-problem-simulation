@@ -32,7 +32,7 @@ The experiment is repeated 100 times, and the results are aggregated.
 
 ## Answer
 
-The following code can be used to determine the answer to the original problem statement. This code uses the default settings which is to run 10,000 games for each simulation, and then aggregate the results for 100 simulations.
+The following code is a simple example of how to determine the answer to the original problem statement. This code uses the default settings which is to run 10,000 games for each simulation, and then aggregate the results for 100 simulations.
 
         Simulation simulation = new Simulation(Game.createInstance(3));
         
@@ -51,6 +51,8 @@ The following code can be used to determine the answer to the original problem s
             System.out.println("results are inconclusive");
         }
 
+It should be noted that the code works, because the probability between switching and sticking for the contestant are wide in a 3 door game.
+If they were neglible then this code sample would need modification.
 
 
 ## Further Info
