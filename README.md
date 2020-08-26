@@ -52,7 +52,7 @@ The following code is a simple example of how to determine the answer to the ori
         }
 
 It should be noted that the above code works, because the probabilities between switching and sticking for the contestant are wide in a 3 door game.
-If the dfference was negligible then this 'answer' would need modification.
+If the difference was negligible then this 'answer' would need modification.
 
 
 ## Further Info
