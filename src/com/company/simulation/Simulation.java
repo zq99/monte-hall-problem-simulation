@@ -11,7 +11,7 @@ public class Simulation {
         this.game = game;
     }
 
-    public SimulationStats runSimulation(int total, boolean stickToFirst) {
+    public SimulationStats runSimulation(int total, boolean switchDoor) {
         /*
            this is the main part determines the result of running the game N times
            the return value is the percentage of wins
@@ -21,7 +21,7 @@ public class Simulation {
         int wins = 0;
         int loses = 0;
         for (int i = 0; i < total; i++) {
-            SimulationResult simulationResult = getSimulationResult(stickToFirst, this.game);
+            SimulationResult simulationResult = getSimulationResult(switchDoor, this.game);
             wins += (simulationResult.isUserWin()) ? 1 : 0;
             loses += (!simulationResult.isUserWin()) ? 1 : 0;
         }
@@ -31,7 +31,7 @@ public class Simulation {
         return simulationStats;
     }
 
-    private SimulationResult getSimulationResult(boolean stickToFirstGuess, Game game) {
+    private SimulationResult getSimulationResult(boolean switchDoor, Game game) {
 
         //records the results here
         SimulationResult simulationResult = new SimulationResult();
@@ -46,7 +46,7 @@ public class Simulation {
         simulationResult.setHostPick(hostPick.choice);
 
         boolean userWin;
-        if (stickToFirstGuess) {
+        if (!switchDoor) {
 
             // user has to stick with first guess
             userWin = game.getDoor(contestantPick).hasCar();

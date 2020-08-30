@@ -5,16 +5,22 @@ import com.company.simulation.SimulationStats;
 
 public class Experiment {
 
-    private int totalNumberOfGames;
-    private int totalNumberOfSimulations;
-    private boolean stickToChoice;
-    private Simulation simulation;
+    private final int totalNumberOfGames;
+    private final int totalNumberOfSimulations;
+    private final boolean switchDoor;
+    private final Simulation simulation;
+    private final String experimentName;
 
     public Experiment(ExperimentBuilder experimentBuilder) {
         this.totalNumberOfGames = experimentBuilder.totalNumberOfGames;
         this.totalNumberOfSimulations = experimentBuilder.totalNumberOfSimulations;
-        this.stickToChoice = experimentBuilder.stickToChoice;
+        this.switchDoor = experimentBuilder.switchDoor;
         this.simulation = experimentBuilder.simulation;
+        this.experimentName = experimentBuilder.experimentName;
+    }
+
+    public String getExperimentName() {
+        return experimentName;
     }
 
     public int getTotalNumberOfGames() {
@@ -25,8 +31,8 @@ public class Experiment {
         return totalNumberOfSimulations;
     }
 
-    public boolean isStickToChoice() {
-        return stickToChoice;
+    public boolean isSwitchDoor() {
+        return switchDoor;
     }
 
     public ExperimentResults runExperiment() {
@@ -35,7 +41,7 @@ public class Experiment {
         float maxWin = 0f;
 
         for (int i = 0; i <= totalNumberOfSimulations; i++) {
-            SimulationStats simulationStats = simulation.runSimulation(totalNumberOfGames, stickToChoice);
+            SimulationStats simulationStats = simulation.runSimulation(totalNumberOfGames, switchDoor);
             totalWins += simulationStats.getPercentageWins();
             minWin = Math.min(simulationStats.getPercentageWins(), minWin);
             maxWin = Math.max(simulationStats.getPercentageWins(), maxWin);
@@ -49,13 +55,26 @@ public class Experiment {
         return experimentResults;
     }
 
+    public static Experiment compare(Experiment experiment1, Experiment experiment2){
+        ExperimentResults results1 = experiment1.runExperiment();
+        ExperimentResults results2 = experiment2.runExperiment();
+        if(results1.getAverageWins() > results2.getAverageWins()){
+            return experiment1;
+        }else if(results2.getAverageWins() > results1.getAverageWins()){
+            return experiment2;
+        }else{
+            return null;
+        }
+    }
+
     public static class ExperimentBuilder {
 
         // default values
         private int totalNumberOfGames = 10000;
         private int totalNumberOfSimulations = 100;
-        private boolean stickToChoice = false;
+        private boolean switchDoor = false;
         private final Simulation simulation;
+        private String experimentName;
 
         public ExperimentBuilder(Simulation simulation) {
             this.simulation = simulation;
@@ -71,14 +90,22 @@ public class Experiment {
             return this;
         }
 
-        public ExperimentBuilder stickToChoice(boolean stickToChoice) {
-            this.stickToChoice = stickToChoice;
+        public ExperimentBuilder switchDoor(boolean switchDoor) {
+            this.switchDoor = switchDoor;
             return this;
         }
+
+        public ExperimentBuilder setExperimentName(String experimentName) {
+            this.experimentName = experimentName;
+            return this;
+        }
+
 
         public Experiment build() {
             return new Experiment(this);
         }
+
+
 
     }
 }
