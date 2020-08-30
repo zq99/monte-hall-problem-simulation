@@ -22,7 +22,8 @@ The experiment is repeated 100 times, and the results are aggregated.
         Experiment experiment = new Experiment.ExperimentBuilder(simulation)
                 .numberOfGameRuns(10000)
                 .numberOfSimulationRuns(100)
-                .stickToChoice(false).build();
+                .switchDoor(true)
+                .build();
 
         ExperimentResults results = experiment.runExperiment();
 
@@ -34,21 +35,23 @@ The experiment is repeated 100 times, and the results are aggregated.
 
 The following code is a simple example of how to determine the answer to the original problem statement. This code uses the default settings which is to run 10,000 games for each simulation, and then aggregate the results for 100 simulations.
 
-        Simulation simulation = new Simulation(Game.createInstance(3));
-        
-        HashMap<Boolean, Float> resultFromChoicesMap = new HashMap<>();
+        Game game = Game.createInstance(3);
+        Simulation simulation = new Simulation(game);
 
-        for(boolean choice : new boolean[]{true,false}){
-            Experiment experiment = new Experiment.ExperimentBuilder(simulation).stickToChoice(choice).build();
-            resultFromChoicesMap.put(choice,experiment.runExperiment().getAverageWins());
-        }
+        Experiment experiment1 = new Experiment.ExperimentBuilder(simulation)
+                .switchDoor(true).setExperimentName("Switch door")
+                .build();
 
-        if(resultFromChoicesMap.get(true) > resultFromChoicesMap.get(false) ){
-            System.out.println("contestant should stick with first choice");
-        }else if(resultFromChoicesMap.get(false) > resultFromChoicesMap.get(true)){
-            System.out.println("contestant should pick again after host reveals a door");
-        }else{
+        Experiment experiment2 = new Experiment.ExperimentBuilder(simulation)
+                .switchDoor(false).setExperimentName("Stick to first choice")
+                .build();
+
+        Experiment bestChoice = Experiment.compare(experiment1,experiment2);
+
+        if(bestChoice == null){
             System.out.println("results are inconclusive");
+        }else{
+            System.out.println("The contestant should: " + bestChoice.getExperimentName());
         }
 
 It should be noted that the above code works, because the probabilities between switching and sticking for the contestant are wide in a 3 door game.
