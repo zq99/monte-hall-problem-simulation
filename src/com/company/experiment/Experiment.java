@@ -55,16 +55,26 @@ public class Experiment {
         return experimentResults;
     }
 
-    public static Experiment compare(Experiment experiment1, Experiment experiment2){
+    public static ComparisonResult compare(Experiment experiment1, Experiment experiment2){
+
+        ComparisonResult result = new ComparisonResult();
+        result.setExperiment1(experiment1);
+        result.setExperiment2(experiment2);
         ExperimentResults results1 = experiment1.runExperiment();
         ExperimentResults results2 = experiment2.runExperiment();
+        float margin = Math.abs(results1.getAverageWins() - results2.getAverageWins());
+        result.setMargin(margin);
+
         if(results1.getAverageWins() > results2.getAverageWins()){
-            return experiment1;
+            result.setBestExperiment(experiment1);
+            result.setBestResults(results1);
         }else if(results2.getAverageWins() > results1.getAverageWins()){
-            return experiment2;
+            result.setBestExperiment(experiment2);
+            result.setBestResults(results2);
         }else{
-            return null;
+            result.setBestExperiment(null);
         }
+        return result;
     }
 
     public static class ExperimentBuilder {

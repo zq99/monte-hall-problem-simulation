@@ -13,7 +13,7 @@ The solution allows you to configure the following parameters:
 
 ## Example
 
-This is an example of running a 3 door game 10,000 times where the contestant repicks after being shown a door by the host.
+This is an example of running a 3 door game 10,000 times, where the contestant re-picks after being shown a door by the host.
 The experiment is repeated 100 times, and the results are aggregated.
 
         Game game = Game.createInstance(3);
@@ -46,16 +46,18 @@ The following code is a simple example of how to determine the answer to the ori
                 .switchDoor(false).setExperimentName("Stick to first choice")
                 .build();
 
-        Experiment bestChoice = Experiment.compare(experiment1,experiment2);
+        ComparisonResult result = Experiment.compare(experiment1,experiment2);
 
-        if(bestChoice == null){
+        if(result.getBestExperiment() == null){
             System.out.println("results are inconclusive");
         }else{
-            System.out.println("The contestant should: " + bestChoice.getExperimentName());
+            System.out.println("The contestant should: " + result.getBestExperiment().getExperimentName());
+            System.out.println("Experiment Average win %: " + result.getBestResults().getAverageWins());
+            System.out.println("The margin % was: " + result.getMargin());
         }
 
 It should be noted that the above code works, because the probabilities between switching and sticking for the contestant are wide in a 3 door game.
-If the difference was negligible then this 'answer' would need modification.
+If the difference was negligible then this 'answer' would probably need modification.
 
 
 ## Further Info

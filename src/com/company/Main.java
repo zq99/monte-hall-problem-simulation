@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.experiment.ComparisonResult;
 import com.company.experiment.Experiment;
 import com.company.experiment.ExperimentResults;
 import com.company.simulation.*;
@@ -12,13 +13,20 @@ public class Main {
     }
 
     private static void basicExample(){
+        /*
+        This is how to run the simulation for a 3 door game
+        where each simulation is for 10,000 games and the contestant switches door.
+        The experiment is repeated 100 times, and the aggregated results are printed
+        to the console.
+        */
+
         Game game = Game.createInstance(3);
         Simulation simulation = new Simulation(game);
 
         Experiment experiment = new Experiment.ExperimentBuilder(simulation)
                 .numberOfGameRuns(10000)
                 .numberOfSimulationRuns(100)
-                .switchDoor(false)
+                .switchDoor(true)
                 .build();
 
         ExperimentResults results = experiment.runExperiment();
@@ -47,16 +55,15 @@ public class Main {
                 .switchDoor(false).setExperimentName("Stick to first choice")
                 .build();
 
-        Experiment bestChoice = Experiment.compare(experiment1,experiment2);
+        ComparisonResult result = Experiment.compare(experiment1,experiment2);
 
-        if(bestChoice == null){
+        if(result.getBestExperiment() == null){
             System.out.println("results are inconclusive");
         }else{
-            System.out.println("The contestant should: " + bestChoice.getExperimentName());
+            System.out.println("The contestant should: " + result.getBestExperiment().getExperimentName());
+            System.out.println("Experiment Average win %: " + result.getBestResults().getAverageWins());
+            System.out.println("The margin % was: " + result.getMargin());
         }
-
-
-
 
 
     }
